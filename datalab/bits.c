@@ -143,15 +143,7 @@ NOTES:
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-    /*
-    int x_and_y = x & y;
-    int not_x = ~x;
-    int not_y = ~y;
-    int nx_and_ny = not_x & not_y;
-    int right = ~x_and_y;
-    int left = ~nx_and_ny;
-    int result = left & right;
-    */
+    /*implement to bitXor*/
     return ~(x&y)&~(~x&~y);
 }
 /* 
@@ -161,9 +153,8 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
-
+    /*use shift to implement tmin*/
   return 1 << 31;
-
 }
 //2
 /*
