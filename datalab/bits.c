@@ -176,7 +176,27 @@ int isTmax(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  return 2;
+    int mask = 0xAA;
+    int tx = x;
+
+    tx = tx | mask;
+    mask = mask << 8;
+    tx = tx | mask;
+    mask = mask << 8;
+    tx = tx | mask;
+    mask = mask << 8;
+    tx = tx | mask;
+
+    tx = tx ^ x;
+
+    /* another way is to construct the 0xAAAAAAAA straightly
+     * int a = 0xAA << 8; //0xaa00
+     * int b = a | 0xaa;  //0xaaaa
+     * int c = b << 16 | b; //0xaaaaaaaa
+     * return !((x & c)^c);
+     */
+
+    return !tx;
 }
 /* 
  * negate - return -x 
