@@ -242,20 +242,13 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-    //x == y
-    int cond1 = !(x ^ y);
+    int signX = (x >> 31) & 1;
+    int signY = (y >> 31) & 1;
+    int signXOR = signX ^ signY;
+    int diff = y + (~x + 1);
+    int signDiff = (diff >> 31) & 1;
 
-    int sign_x = x >> 31;
-    int sign_y = y >> 31;
-    //x > 0, y < 0
-    int cond2 = (!sign_x) & sign_y;
-    //x < 0, y > 0
-    int cond3 = !(sign_x & !(!sign_y));
-
-    //x and y have identical sign, that x - y < 0
-    int cond4 = ((x + ~y + 1) >> 31) & 0x01;
-
-    return cond1 | cond2 | cond3 | cond4;
+    return (!signXOR & !signDiff) | (signXOR & signX);
 }
 //4
 /* 
