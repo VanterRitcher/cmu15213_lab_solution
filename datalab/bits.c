@@ -219,8 +219,8 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-    int cond1 = !((x >> 4) ^ 0x03);
-    int cond2 = ((x + (~0x3a + 1)) & (1 << 31)) >> 31;
+    int cond1 = !(((0x39 + ~x + 1) >> 31) & 0x01);
+    int cond2 = !(((x + ~0x30 + 1) >> 31) & 0x01);
     return cond1 & cond2;
 }
 /* 
@@ -231,7 +231,8 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+    int mask = ((!!x) << 31) >> 31;
+    return (~mask & z) | (mask & y);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -241,7 +242,20 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+    //x == y
+    int cond1 = !(x ^ y);
+
+    int sign_x = x >> 31;
+    int sign_y = y >> 31;
+    //x > 0, y < 0
+    int cond2 = (!sign_x) & sign_y;
+    //x < 0, y > 0
+    int cond3 = !(sign_x & !(!sign_y));
+
+    //x and y have identical sign, that x - y < 0
+    int cond4 = ((x + ~y + 1) >> 31) & 0x01;
+
+    return cond1 | cond2 | cond3 | cond4;
 }
 //4
 /* 
