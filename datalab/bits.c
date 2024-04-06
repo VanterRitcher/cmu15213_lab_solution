@@ -144,7 +144,8 @@ NOTES:
  */
 int bitXor(int x, int y) {
     /*implement to bitXor*/
-    return ~(x&y)&~(~x&~y);
+    //return ~(x&y)&~(~x&~y);
+    return (y|x) & (~y|~x);
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -165,7 +166,8 @@ int tmin(void) {
  *   Rating: 1
  */
 int isTmax(int x) {
-    return !((~(x + 1) ^ x))&!!(x + 1);
+    int minus_one = !~x;//x = -1
+    return !((~(x + 1) ^ x) | minus_one);
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
